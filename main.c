@@ -6,18 +6,9 @@
 /*   By: ecousill <ecousill@student.42urduliz.com>  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/12/17 11:56:12 by ecousill          #+#    #+#             */
-/*   Updated: 2025/12/17 11:56:18 by ecousill         ###   ########.fr       */
+/*   Updated: 2025/12/17 12:01:33 by ecousill         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
-
-/*
-En mac:
-	gcc main.c \
-	-I/opt/homebrew/opt/readline/include \
-	-L/opt/homebrew/opt/readline/lib \
-	-lreadline
-
-*/
 
 #include "libft/libft.h"
 #include <stdio.h>
@@ -25,7 +16,6 @@ En mac:
 #include <readline/history.h>
 #include <sys/wait.h>
 
-
 /*
 En mac:
 	gcc main.c \
@@ -34,7 +24,6 @@ En mac:
 	-lreadline
 
 */
-
 
 char	**parse(char *line)
 {
