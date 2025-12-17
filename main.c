@@ -5,12 +5,8 @@
 /*                                                    +:+ +:+         +:+     */
 /*   By: ecousill <ecousill@student.42urduliz.com>  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/07/01 20:10:01 by ecousill          #+#    #+#             */
-<<<<<<< HEAD
-/*   Updated: 2025/12/17 09:21:38 by ecousill         ###   ########.fr       */
-=======
-/*   Updated: 2025/12/17 11:48:16 by ecousill         ###   ########.fr       */
->>>>>>> 29b83f6 (Add how to compile on Mac & function exec_command)
+/*   Created: 2025/12/17 11:56:12 by ecousill          #+#    #+#             */
+/*   Updated: 2025/12/17 11:56:18 by ecousill         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
