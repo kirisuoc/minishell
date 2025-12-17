@@ -6,9 +6,18 @@
 /*   By: ecousill <ecousill@student.42urduliz.com>  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/01 20:10:01 by ecousill          #+#    #+#             */
-/*   Updated: 2025/12/16 20:19:35 by ecousill         ###   ########.fr       */
+/*   Updated: 2025/12/17 09:21:38 by ecousill         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
+
+/*
+En mac:
+	gcc main.c \
+	-I/opt/homebrew/opt/readline/include \
+	-L/opt/homebrew/opt/readline/lib \
+	-lreadline
+
+*/
 
 #include "libft/libft.h"
 #include <stdio.h>
