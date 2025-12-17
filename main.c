@@ -6,7 +6,11 @@
 /*   By: ecousill <ecousill@student.42urduliz.com>  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/01 20:10:01 by ecousill          #+#    #+#             */
+<<<<<<< HEAD
 /*   Updated: 2025/12/17 09:21:38 by ecousill         ###   ########.fr       */
+=======
+/*   Updated: 2025/12/17 11:48:16 by ecousill         ###   ########.fr       */
+>>>>>>> 29b83f6 (Add how to compile on Mac & function exec_command)
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,6 +27,18 @@ En mac:
 #include <stdio.h>
 #include <readline/readline.h>
 #include <readline/history.h>
+#include <sys/wait.h>
+
+
+/*
+En mac:
+	gcc main.c \
+	-I/opt/homebrew/opt/readline/include \
+	-L/opt/homebrew/opt/readline/lib \
+	-lreadline
+
+*/
+
 
 char	**parse(char *line)
 {
@@ -43,8 +59,34 @@ char	**parse(char *line)
 	return args;
 }
 
-int	main(/*int ac, char **av*/)
+void exec_command(char **args, char **envp)
 {
+	pid_t	pid = fork();
+	if (pid < 0)
+	{
+		perror("fork");
+		return ;
+	}
+	if (pid == 0)
+	{
+		// proceso hijo
+		if (execve(args[0], args, envp) == -1)
+		{
+			perror("execve");
+			exit(1);
+		}
+	}
+	else
+	{
+		// proceso padre
+		waitpid(pid, NULL, 0);
+	}
+}
+
+int	main(int ac, char **av, char **envp)
+{
+	if (ac > 3000)
+		return (0);
 	while (1)
 	{
 		char	*line;
@@ -57,8 +99,19 @@ int	main(/*int ac, char **av*/)
 			add_history(line);
 
 		args = parse(line);
+		if (av[0])
+			exec_command(args, envp);
+
+
+
+
+
 		for (int i = 0; args[i]; i++)
 			printf("%s\n", args[i]);
+
+
+
+
 		for (int i = 0; args[i]; i++)
 			free(args[i]);
 		free(args);
@@ -66,18 +119,5 @@ int	main(/*int ac, char **av*/)
 	}
 	rl_clear_history();
 
-/*	int	args = ac;
-
- 	while (1)
-	{
-		printf("Este es el prompt.\n");
-		if (args >= 2)
-		{
-			printf("%s\n", av[1]);
-			args--;
-		}
-		else
-			return 0;
-	} */
 	return (0);
 }
