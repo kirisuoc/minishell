@@ -6,7 +6,7 @@
 /*   By: ecousill <ecousill@student.42urduliz.com>  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/12/17 11:56:12 by ecousill          #+#    #+#             */
-/*   Updated: 2025/12/17 12:01:33 by ecousill         ###   ########.fr       */
+/*   Updated: 2025/12/18 17:57:17 by ecousill         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,6 +22,8 @@ En mac:
 	-I/opt/homebrew/opt/readline/include \
 	-L/opt/homebrew/opt/readline/lib \
 	-lreadline
+
+	y usar clear_history()
 
 */
 
