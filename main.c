@@ -18,7 +18,7 @@
 
 /*
 En mac:
-	gcc main.c \
+	cc main.c \
 	-I/opt/homebrew/opt/readline/include \
 	-L/opt/homebrew/opt/readline/lib \
 	-lreadline
