@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_split.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ecousill <ecousill@student.42.fr>          +#+  +:+       +#+        */
+/*   By: ecousill <ecousill@student.42urduliz.com>  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/12 11:24:49 by erikcousill       #+#    #+#             */
-/*   Updated: 2025/07/01 20:52:00 by ecousill         ###   ########.fr       */
+/*   Updated: 2025/12/19 13:54:04 by ecousill         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -111,11 +111,11 @@ char	**ft_split(char const *s, char c)
 	return (push_words_in_array(array, s, c, i));
 }
 
-int	main(void)
+/* int	main(void)
 {
 	char *string = NULL;
 	char	**matrix = ft_split(string, '/');
 
 	printf("%s, %s, %s", matrix[0], matrix[1], matrix[2]);
 	return (0);
-}
+} */

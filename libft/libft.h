@@ -6,7 +6,7 @@
 /*   By: ecousill <ecousill@student.42urduliz.com>  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/09 11:13:59 by ecousill          #+#    #+#             */
-/*   Updated: 2025/12/19 13:04:41 by ecousill         ###   ########.fr       */
+/*   Updated: 2025/12/19 13:54:24 by ecousill         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -73,6 +73,5 @@ t_list	*ft_lstmap(t_list *lst, void *(*f)(void *), void (*del)(void *));
 // Funciones extra
 long	ft_atol(const char *nptr);
 int		ft_strcmp(const char *s1, const char *s2);
-
 
 #endif
