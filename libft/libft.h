@@ -6,7 +6,7 @@
 /*   By: ecousill <ecousill@student.42urduliz.com>  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/09 11:13:59 by ecousill          #+#    #+#             */
-/*   Updated: 2025/12/19 13:01:25 by ecousill         ###   ########.fr       */
+/*   Updated: 2025/12/19 13:03:19 by ecousill         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,8 +17,6 @@
 # include <unistd.h>
 # include <stdlib.h>
 # include <stdio.h>
-# include "get_next_line/get_next_line.h"
-
 typedef struct s_list
 {
 	void			*content;
