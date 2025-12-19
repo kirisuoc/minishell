@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   libft.h                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ecousill <ecousill@student.42.fr>          +#+  +:+       +#+        */
+/*   By: ecousill <ecousill@student.42urduliz.com>  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/09 11:13:59 by ecousill          #+#    #+#             */
-/*   Updated: 2025/07/01 20:57:49 by ecousill         ###   ########.fr       */
+/*   Updated: 2025/12/19 13:04:41 by ecousill         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,8 +17,6 @@
 # include <unistd.h>
 # include <stdlib.h>
 # include <stdio.h>
-# include "ft_printf/libftprintf.h"
-# include "get_next_line/get_next_line.h"
 
 typedef struct s_list
 {
