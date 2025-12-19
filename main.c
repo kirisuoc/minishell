@@ -6,7 +6,7 @@
 /*   By: ecousill <ecousill@student.42urduliz.com>  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/12/17 11:56:12 by ecousill          #+#    #+#             */
-/*   Updated: 2025/12/19 13:35:03 by ecousill         ###   ########.fr       */
+/*   Updated: 2025/12/19 13:59:07 by ecousill         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -76,7 +76,7 @@ void exec_command(char **args, char **envp)
 				exit(1);
 			}
 		}
-/* 		else
+	/* 	else
 		{
 			if (execve(args[0], args, envp) == -1)
 			{
