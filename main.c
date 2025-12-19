@@ -6,7 +6,7 @@
 /*   By: ecousill <ecousill@student.42urduliz.com>  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/12/17 11:56:12 by ecousill          #+#    #+#             */
-/*   Updated: 2025/12/19 12:52:30 by ecousill         ###   ########.fr       */
+/*   Updated: 2025/12/19 13:35:03 by ecousill         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,6 +26,17 @@ En mac:
 
 	clear_history() en Linux
 */
+
+int	has_slash(char *cmd)
+{
+	while (*cmd)
+	{
+		if (*cmd == '/')
+			return (1);
+		cmd++;
+	}
+	return (0);
+}
 
 char	**parse(char *line)
 {
@@ -57,11 +68,22 @@ void exec_command(char **args, char **envp)
 	if (pid == 0)
 	{
 		// proceso hijo
-		if (execve(args[0], args, envp) == -1)
+		if (has_slash(args[0]))
 		{
-			perror("execve");
-			exit(1);
+			if (execve(args[0], args, envp) == -1)
+			{
+				perror("execve");
+				exit(1);
+			}
 		}
+/* 		else
+		{
+			if (execve(args[0], args, envp) == -1)
+			{
+				perror("execve");
+				exit(1);
+			}
+		} */
 	}
 	else
 	{
