@@ -6,7 +6,7 @@
 /*   By: ecousill <ecousill@student.42urduliz.com>  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/12/17 11:56:12 by ecousill          #+#    #+#             */
-/*   Updated: 2025/12/18 17:58:48 by ecousill         ###   ########.fr       */
+/*   Updated: 2025/12/19 12:55:27 by ecousill         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -85,7 +85,7 @@ int	main(int ac, char **av, char **envp)
 			add_history(line);
 
 		args = parse(line);
-		if (av[0])
+		if (args[0])
 			exec_command(args, envp);
 
 
