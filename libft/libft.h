@@ -6,12 +6,10 @@
 /*   By: ecousill <ecousill@student.42urduliz.com>  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/09 11:13:59 by ecousill          #+#    #+#             */
-<<<<<<< HEAD
-/*   Updated: 2025/12/19 13:03:19 by ecousill         ###   ########.fr       */
-=======
-/*   Updated: 2025/12/19 13:04:41 by ecousill         ###   ########.fr       */
->>>>>>> feature/erik
+/*   Updated: 2025/12/19 13:57:52 by ecousill         ###   ########.fr       */
 /*                                                                            */
+/* ************************************************************************** */
+
 /* ************************************************************************** */
 
 #ifndef LIBFT_H
@@ -21,10 +19,7 @@
 # include <unistd.h>
 # include <stdlib.h>
 # include <stdio.h>
-<<<<<<< HEAD
-=======
 
->>>>>>> feature/erik
 typedef struct s_list
 {
 	void			*content;
@@ -80,6 +75,5 @@ t_list	*ft_lstmap(t_list *lst, void *(*f)(void *), void (*del)(void *));
 // Funciones extra
 long	ft_atol(const char *nptr);
 int		ft_strcmp(const char *s1, const char *s2);
-
 
 #endif
