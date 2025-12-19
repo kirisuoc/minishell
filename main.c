@@ -6,7 +6,11 @@
 /*   By: ecousill <ecousill@student.42urduliz.com>  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/12/17 11:56:12 by ecousill          #+#    #+#             */
+<<<<<<< HEAD
 /*   Updated: 2025/12/19 12:55:27 by ecousill         ###   ########.fr       */
+=======
+/*   Updated: 2025/12/19 13:35:03 by ecousill         ###   ########.fr       */
+>>>>>>> feature/erik
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,13 +22,25 @@
 
 /*
 En mac:
-	cc main.c \
+	cc main.c -g \
 	-I/opt/homebrew/opt/readline/include \
 	-L/opt/homebrew/opt/readline/lib \
-	-lreadline
+	-lreadline \
+	-o minishell
 
 	clear_history() en Linux
 */
+
+int	has_slash(char *cmd)
+{
+	while (*cmd)
+	{
+		if (*cmd == '/')
+			return (1);
+		cmd++;
+	}
+	return (0);
+}
 
 char	**parse(char *line)
 {
@@ -56,11 +72,22 @@ void exec_command(char **args, char **envp)
 	if (pid == 0)
 	{
 		// proceso hijo
-		if (execve(args[0], args, envp) == -1)
+		if (has_slash(args[0]))
 		{
-			perror("execve");
-			exit(1);
+			if (execve(args[0], args, envp) == -1)
+			{
+				perror("execve");
+				exit(1);
+			}
 		}
+/* 		else
+		{
+			if (execve(args[0], args, envp) == -1)
+			{
+				perror("execve");
+				exit(1);
+			}
+		} */
 	}
 	else
 	{
@@ -88,16 +115,6 @@ int	main(int ac, char **av, char **envp)
 		if (args[0])
 			exec_command(args, envp);
 
-
-
-
-
-		for (int i = 0; args[i]; i++)
-			printf("%s\n", args[i]);
-
-
-
-
 		for (int i = 0; args[i]; i++)
 			free(args[i]);
 		free(args);
@@ -107,3 +124,19 @@ int	main(int ac, char **av, char **envp)
 
 	return (0);
 }
+
+
+/*
+1. Flujo general: ✔️ correcto
+	Tu descripción del flujo es esencialmente esta:
+		readline() lee una línea del usuario
+		Si devuelve NULL → salir (Ctrl-D)
+		Si la línea no está vacía → add_history
+		Parseas la línea en un array args
+		Si hay comando → ejecutas
+		Creas un proceso hijo con fork
+		En el hijo llamas a execve
+		El hijo se transforma en el programa
+		El padre espera
+		Vuelves al prompt
+*/
