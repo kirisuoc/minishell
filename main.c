@@ -6,13 +6,14 @@
 /*   By: ecousill <ecousill@student.42urduliz.com>  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/12/17 11:56:12 by ecousill          #+#    #+#             */
-/*   Updated: 2025/12/21 08:30:36 by ecousill         ###   ########.fr       */
+/*   Updated: 2025/12/21 18:34:49 by ecousill         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-char	**parse(char *line)
+// IMPLEMENTAR ft_split_whitespace en lugar de strtok
+/* char	**parse(char *line)
 {
 	char	**args;
 	char	*token;
@@ -28,6 +29,17 @@ char	**parse(char *line)
 		token = strtok(NULL, " \t\n");									// Función no permitida, usar ft_split?
 	}
 	args[i] = NULL; // execve necesita NULL al final
+	return (args);
+} */
+
+char	**parse(char *line)
+{
+	char	**args;
+	char	*token;
+	int		i;
+
+	i = 0;
+	args = ft_split_whitespace(line);
 	return (args);
 }
 
