@@ -1,46 +1,24 @@
-/* ************************************************************************** */
-/*                                                                            */
-/*                                                        :::      ::::::::   */
-/*   main.c                                             :+:      :+:    :+:   */
-/*                                                    +:+ +:+         +:+     */
-/*   By: ecousill <ecousill@student.42urduliz.com>  +#+  +:+       +#+        */
-/*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/12/17 11:56:12 by ecousill          #+#    #+#             */
-<<<<<<< HEAD
-/*   Updated: 2025/12/19 12:55:27 by ecousill         ###   ########.fr       */
-=======
-/*   Updated: 2025/12/19 13:35:03 by ecousill         ###   ########.fr       */
->>>>>>> feature/erik
-/*                                                                            */
-/* ************************************************************************** */
+#include "minishell.h"
 
-#include "libft/libft.h"
-#include <stdio.h>
-#include <readline/readline.h>
-#include <readline/history.h>
-#include <sys/wait.h>
-
-/*
-En mac:
-	cc main.c -g \
-	-I/opt/homebrew/opt/readline/include \
-	-L/opt/homebrew/opt/readline/lib \
-	-lreadline \
-	-o minishell
-
-	clear_history() en Linux
-*/
-
-int	has_slash(char *cmd)
+// IMPLEMENTAR ft_split_whitespace en lugar de strtok
+/* char	**parse(char *line)
 {
-	while (*cmd)
+	char	**args;
+	char	*token;
+	int		i;
+
+	i = 0;
+	args = malloc(128 * sizeof(char *)); // espacio para 128 tokens
+	token = strtok(line, " \t\n");										// Función no permitida, usar ft_split?
+	while (token != NULL)
 	{
-		if (*cmd == '/')
-			return (1);
-		cmd++;
+		args[i] = strdup(token); // duplicar string
+		i++;
+		token = strtok(NULL, " \t\n");									// Función no permitida, usar ft_split?
 	}
-	return (0);
-}
+	args[i] = NULL; // execve necesita NULL al final
+	return (args);
+} */
 
 char	**parse(char *line)
 {
@@ -49,21 +27,41 @@ char	**parse(char *line)
 	int		i;
 
 	i = 0;
-	args = malloc(128 * sizeof(char *)); // espacio para 128 tokens
-	token = strtok(line, " \t\n");
-	while (token != NULL)
-	{
-		args[i] = strdup(token); // duplicar string
-		i++;
-		token = strtok(NULL, " \t\n");
-	}
-	args[i] = NULL; // execve necesita NULL al final
-	return args;
+	args = ft_split_whitespace(line);
+	return (args);
 }
 
-void exec_command(char **args, char **envp)
+char	*find_in_path(char *cmd, char **envp)
 {
-	pid_t	pid = fork();
+	char	**paths;
+	char	*full_path;
+	char	*temp;
+	int		i;
+
+	paths = ft_split(getenv("PATH"), ':');
+	i = 0;
+	while (paths[i])
+	{
+		temp = ft_strjoin(paths[i], "/");
+		full_path = ft_strjoin(temp, cmd);
+		free(temp);
+		if (access(full_path, X_OK) == 0)
+		{
+			free_array(paths);
+			return (full_path);
+		}
+		i++;
+	}
+	free_array(paths);
+	return (NULL);
+}
+
+void	exec_command(char **args, char **envp)
+{
+	pid_t	pid;
+	char	*path;
+
+	pid = fork();
 	if (pid < 0)
 	{
 		perror("fork");
@@ -76,18 +74,21 @@ void exec_command(char **args, char **envp)
 		{
 			if (execve(args[0], args, envp) == -1)
 			{
-				perror("execve");
+				print_error(args[0], ERR_NO_FILE);
 				exit(1);
 			}
 		}
-/* 		else
+		else
 		{
-			if (execve(args[0], args, envp) == -1)
+			path = find_in_path(args[0], envp);
+			if (!path)
 			{
-				perror("execve");
-				exit(1);
+				print_error(args[0], ERR_CMD_NOT_FOUND);
+				exit(127);
 			}
-		} */
+			execve(path, args, envp);
+			free(path);
+		}
 	}
 	else
 	{
@@ -98,33 +99,27 @@ void exec_command(char **args, char **envp)
 
 int	main(int ac, char **av, char **envp)
 {
+	char	*line;
+	char	**args;
+
 	if (ac > 3000)
 		return (0);
 	while (1)
 	{
-		char	*line;
-		char	**args;
-
 		line = readline("minishell$ ");
 		if (!line)
-			break;
+			break ;
 		if (*line)
 			add_history(line);
-
 		args = parse(line);
 		if (args[0])
 			exec_command(args, envp);
-
-		for (int i = 0; args[i]; i++)
-			free(args[i]);
-		free(args);
+		free_array(args);
 		free(line);
 	}
 	rl_clear_history();
-
 	return (0);
 }
-
 
 /*
 1. Flujo general: ✔️ correcto
@@ -139,4 +134,15 @@ int	main(int ac, char **av, char **envp)
 		El hijo se transforma en el programa
 		El padre espera
 		Vuelves al prompt
+*/
+
+/*
+En mac:
+	cc main.c -g \
+	-I/opt/homebrew/opt/readline/include \
+	-L/opt/homebrew/opt/readline/lib \
+	-lreadline \
+	-o minishell
+
+	clear_history() en Linux
 */
