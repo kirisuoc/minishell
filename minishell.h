@@ -1,13 +1,13 @@
 #ifndef MINISHELL_H
 # define MINISHELL_H
 
-#include "libft/libft.h"
-#include <stdio.h>
-#include <readline/readline.h>
-#include <readline/history.h>
-#include <sys/wait.h>
+# include "libft/libft.h"
+# include <stdio.h>
+# include <readline/readline.h>
+# include <readline/history.h>
+# include <sys/wait.h>
 
-#define STDERR 2
+# define STDERR 2
 
 enum e_error_type {
 	ERR_CMD_NOT_FOUND,
@@ -17,6 +17,7 @@ enum e_error_type {
 
 void	free_array(char **array);
 int		has_slash(char *cmd);
+int		is_whitespace(char c);
 void	print_error(char *cmd, enum e_error_type type);
 
 char	**ft_split_whitespace(char const *s);

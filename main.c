@@ -38,7 +38,7 @@ char	*find_in_path(char *cmd, char **envp)
 
 void	child_exec(char *cmd, char **args, char **envp)
 {
-	char *path;
+	char	*path;
 
 	if (has_slash(cmd))
 	{

@@ -1,10 +1,5 @@
 #include "minishell.h"
 
-static int	is_whitespace(char c)
-{
-	return (c == ' ' || c == '\t' || c == '\n');
-}
-
 static int	count_words(char const *s)
 {
 	int	in_word;
@@ -87,7 +82,6 @@ static char	**push_words_in_array(char **array, char const *s, int i)
 	array[i] = NULL;
 	return (array);
 }
-
 
 char	**ft_split_whitespace(char const *s)
 {

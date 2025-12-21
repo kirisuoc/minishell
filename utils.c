@@ -24,6 +24,11 @@ int	has_slash(char *cmd)
 	return (0);
 }
 
+int	is_whitespace(char c)
+{
+	return (c == ' ' || c == '\t' || c == '\n');
+}
+
 void	print_error(char *cmd, enum e_error_type type)
 {
 	if (type == ERR_CMD_NOT_FOUND)
