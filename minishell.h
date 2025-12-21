@@ -18,6 +18,9 @@ enum e_error_type {
 void	free_array(char **array);
 int		has_slash(char *cmd);
 void	print_error(char *cmd, enum e_error_type type);
+
+char	**ft_split_whitespace(char const *s);
+
 char	**parse(char *line);
 char	*find_in_path(char *cmd, char **envp);
 void	exec_command(char **args, char **envp);
