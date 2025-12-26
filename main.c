@@ -85,11 +85,19 @@ int	main(int ac, char **av, char **envp)
 
 	if (ac > 3000)
 		return (0);
+	init_signals();
 	while (1)
 	{
-		line = readline("minishell$ ");
+		line = readline(PROMPT);
+		// line = readline("minishell$ ");
 		if (!line)
 			break ;
+		if (g_signal == SIGINT)  // Ctrl-C
+		{
+		g_signal = 0;  // reset
+		free(line);     // readline malloc
+		continue;       // vuelve al inicio del bucle
+		}
 		if (*line)
 			add_history(line);
 		args = parse(line);
