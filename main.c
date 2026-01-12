@@ -1,25 +1,5 @@
 #include "minishell.h"
 
-// IMPLEMENTAR ft_split_whitespace en lugar de strtok
-/* char	**parse(char *line)
-{
-	char	**args;
-	char	*token;
-	int		i;
-
-	i = 0;
-	args = malloc(128 * sizeof(char *)); // espacio para 128 tokens
-	token = strtok(line, " \t\n");										// Función no permitida, usar ft_split?
-	while (token != NULL)
-	{
-		args[i] = strdup(token); // duplicar string
-		i++;
-		token = strtok(NULL, " \t\n");									// Función no permitida, usar ft_split?
-	}
-	args[i] = NULL; // execve necesita NULL al final
-	return (args);
-} */
-
 char	**parse(char *line)
 {
 	char	**args;
@@ -56,6 +36,31 @@ char	*find_in_path(char *cmd, char **envp)
 	return (NULL);
 }
 
+void	child_exec(char *cmd, char **args, char **envp)
+{
+	char	*path;
+
+	if (has_slash(cmd))
+	{
+		if (execve(cmd, args, envp) == -1)
+		{
+			print_error(cmd, ERR_NO_FILE);
+			exit(1);
+		}
+	}
+	else
+	{
+		path = find_in_path(cmd, envp);
+		if (!path)
+		{
+			print_error(cmd, ERR_CMD_NOT_FOUND);
+			exit(127);
+		}
+		execve(path, args, envp);
+		free(path);
+	}
+}
+
 void	exec_command(char **args, char **envp)
 {
 	pid_t	pid;
@@ -69,31 +74,13 @@ void	exec_command(char **args, char **envp)
 	}
 	if (pid == 0)
 	{
-		// proceso hijo
-		if (has_slash(args[0]))
-		{
-			if (execve(args[0], args, envp) == -1)
-			{
-				print_error(args[0], ERR_NO_FILE);
-				exit(1);
-			}
-		}
-		else
-		{
-			path = find_in_path(args[0], envp);
-			if (!path)
-			{
-				print_error(args[0], ERR_CMD_NOT_FOUND);
-				exit(127);
-			}
-			execve(path, args, envp);
-			free(path);
-		}
+		// restore_termios() // Para restaurar valor inicial 'stty echoctl'
+		child_exec(args[0], args, envp);	// proceso hijo
 	}
 	else
 	{
-		// proceso padre
-		waitpid(pid, NULL, 0);
+		disable_echoctl();	// Volvemos a desactivar porque se activó en el hijo
+		waitpid(pid, NULL, 0);				// proceso padre
 	}
 }
 
@@ -104,11 +91,21 @@ int	main(int ac, char **av, char **envp)
 
 	if (ac > 3000)
 		return (0);
+	// save_termios(); // estado original
+	init_signals();
+	disable_echoctl();	// Para que no escriba '^C' (para el prompt)
 	while (1)
 	{
-		line = readline("minishell$ ");
+		line = readline(PROMPT);
+		// line = readline("minishell$ ");
 		if (!line)
 			break ;
+		if (g_signal == SIGINT)  // Ctrl-C
+		{
+		g_signal = 0;  // reset
+		free(line);     // readline malloc
+		continue;       // vuelve al inicio del bucle
+		}
 		if (*line)
 			add_history(line);
 		args = parse(line);
