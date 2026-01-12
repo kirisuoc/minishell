@@ -73,9 +73,15 @@ void	exec_command(char **args, char **envp)
 		return ;
 	}
 	if (pid == 0)
+	{
+		// restore_termios() // Para restaurar valor inicial 'stty echoctl'
 		child_exec(args[0], args, envp);	// proceso hijo
+	}
 	else
+	{
+		disable_echoctl();	// Volvemos a desactivar porque se activó en el hijo
 		waitpid(pid, NULL, 0);				// proceso padre
+	}
 }
 
 int	main(int ac, char **av, char **envp)
@@ -85,7 +91,9 @@ int	main(int ac, char **av, char **envp)
 
 	if (ac > 3000)
 		return (0);
+	// save_termios(); // estado original
 	init_signals();
+	disable_echoctl();	// Para que no escriba '^C' (para el prompt)
 	while (1)
 	{
 		line = readline(PROMPT);
